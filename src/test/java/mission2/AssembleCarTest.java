@@ -55,7 +55,19 @@ class AssembleCarTest {
 
         String out = outContent.toString();
         assertTrue(out.contains("멋진 차량이 완성되었습니다."));
+    }
 
+    @Test
+    @DisplayName("정상입력시_마지막_RunTest확인2")
+    void 정상입력시_마지막_RunTest확인2() throws InterruptedException {
+        String input = "1\n1\n1\n1\n1\nexit";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        AssembleCar.main(new String[0]);
+
+        String out = outContent.toString();
+        assertTrue(out.contains("멋진 차량이 완성되었습니다."));
     }
 
     @Test

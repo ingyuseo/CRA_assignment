@@ -33,9 +33,6 @@ class RunTestMenuTest {
     @Test
     @DisplayName("잘못된입력_False반환")
     void 잘못된입력_False반환(){
-        car.setBrake("Bosch");
-        car.setSteering("WIA");
-
         boolean result = sut.isValidInputRange(-1);
 
         assertThat(result).isEqualTo(false);
@@ -49,7 +46,7 @@ class RunTestMenuTest {
         car.setBrake("Mando");
 
         String result = RunTestMenu.getValidComponentResult(car);
-
+        System.out.println(result);
         assertThat(result).isNotEqualTo("PASS");
     }
 
