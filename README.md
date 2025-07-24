@@ -9,4 +9,5 @@
 - [x] D5 : 100% 커버리지를 맞췄습니다.
 
 
-<img width="640" height="130" alt="image" src="https://github.com/user-attachments/assets/cacee92c-c7fc-4374-922e-a2d67ee78458" />
+<img width="552" height="218" alt="image" src="https://github.com/user-attachments/assets/20a3b661-0ce3-4cff-a96c-6d89c8e5c23b" />
+
