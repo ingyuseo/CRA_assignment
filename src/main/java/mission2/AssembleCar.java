@@ -1,27 +1,25 @@
 package mission2;
 
-import mission2.menu.CarTypeMenu;
-import mission2.menu.Menu;
+import mission2.menu.*;
 
 import java.util.Scanner;
 
 public class AssembleCar {
     private static final String CLEAR_SCREEN = "\033[H\033[2J";
-
-    public static final int DELAY_MS = 800;
-
     public static final String EXIT_REPLY = "바이바이";
     public static final String ERROR_INPUT_NOT_NUMBER = "ERROR :: 숫자만 입력 가능";
+    public static final int DELAY_MS = 800;
+
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Menu currentMenu = new CarTypeMenu();
         Car car = new Car();
-
         int choice;
 
+        Menu currentMenu = new CarTypeMenu();
+
         while (true) {
-            ClearScreen();
+            clearScreen();
             currentMenu.showMenu();
 
             String input = getInput(scanner);
@@ -43,7 +41,7 @@ public class AssembleCar {
                 continue;
             }
 
-            currentMenu.applyChoice(car, choice);
+           currentMenu = currentMenu.applyAndgetNextMenu(car, choice);
         }
         scanner.close();
     }
@@ -53,15 +51,14 @@ public class AssembleCar {
         return sc.nextLine().trim();
     }
 
-    private static boolean isExit(String buf) {
+    public static boolean isExit(String buf) {
         return buf.equalsIgnoreCase("exit");
     }
 
-    private static void ClearScreen() {
+    private static void clearScreen() {
         System.out.print(CLEAR_SCREEN);
         System.out.flush();
     }
-
 
     public static void delay(int ms) {
         try {

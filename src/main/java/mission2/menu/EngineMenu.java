@@ -20,9 +20,13 @@ public class EngineMenu implements Menu {
         return true;
     }
 
-    public void applyChoice(Car car, int choice) {
+    public Menu applyAndgetNextMenu(Car car, int choice) {
+        if(choice == 0) return new CarTypeMenu();
+
         car.setEngine(Car.engineList[choice]);
         System.out.printf("%s 엔진을 선택하셨습니다.\n", car.getEngine());
+
+        return new BrakeSystemMenu();
     }
 
 }

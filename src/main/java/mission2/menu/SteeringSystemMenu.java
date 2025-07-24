@@ -20,8 +20,12 @@ public class SteeringSystemMenu implements Menu {
         return true;
     }
 
-    public void applyChoice(Car car, int choice) {
+    public Menu applyAndgetNextMenu(Car car, int choice) {
+        if(choice == 0) return new BrakeSystemMenu();
+
         car.setSteering(Car.steeringList[choice]);
         System.out.printf("%s 조향장치를 선택하셨습니다.\n", car.getSteering());
+
+        return new RunTestMenu();
     }
 }

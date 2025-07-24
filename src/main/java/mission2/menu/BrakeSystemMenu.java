@@ -20,8 +20,12 @@ public class BrakeSystemMenu implements Menu {
         return true;
     }
 
-    public void applyChoice(Car car, int choice) {
+    public Menu applyAndgetNextMenu(Car car, int choice) {
+        if(choice == 0) return new EngineMenu();
+
         car.setBrake(Car.brakeList[choice]);
         System.out.printf("%s 제동장치를 선택하셨습니다.\n", car.getBrake());
+
+        return new SteeringSystemMenu();
     }
 }

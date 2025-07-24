@@ -22,8 +22,11 @@ public class RunTestMenu implements Menu {
         return true;
     }
 
-    public void applyChoice(Car car, int choice) {
-        if (choice == 1) {
+    public Menu applyAndgetNextMenu(Car car, int choice) {
+        if(choice == 0){
+            return new CarTypeMenu();
+        }
+        else if (choice == 1) {
             runProducedCar(car);
             delay(2000);
         } else if (choice == 2) {
@@ -34,6 +37,7 @@ public class RunTestMenu implements Menu {
         }
 
         delay(DELAY_MS);
+        return this;
     }
 
     public static void runProducedCar(Car car) {
@@ -41,12 +45,16 @@ public class RunTestMenu implements Menu {
             System.out.println("자동차가 동작되지 않습니다");
             return;
         }
-        if (car.getEngine() == "BROKEN_ENGINE") {
+        if (car.getEngine().equals("고장난 엔진")) {
             System.out.println("엔진이 고장나있습니다.");
             System.out.println("자동차가 움직이지 않습니다.");
             return;
         }
 
+        printWorkingStauts(car);
+    }
+
+    private static void printWorkingStauts(Car car) {
         System.out.printf("Car Type : %s\n", car.getCarType());
         System.out.printf("Engine   : %s\n", car.getEngine());
         System.out.printf("Brake    : %s\n", car.getBrake());
@@ -66,15 +74,15 @@ public class RunTestMenu implements Menu {
     }
 
     public static String getValidComponentResult(Car car) {
-        if (car.getCarType() == "Sedan" && car.getBrake() == "Continental")
+        if (car.getCarType().equals("Sedan") && car.getBrake().equals("Continental"))
             return "Sedan에는 Continental제동장치 사용 불가";
-        if (car.getCarType() == "SUV" && car.getEngine() == "TOYOTA")
+        if (car.getCarType().equals("SUV") && car.getEngine().equals("TOYOTA"))
             return "SUV에는 TOYOTA엔진 사용 불가";
-        if (car.getCarType() == "Truck" && car.getEngine() == "WIA")
+        if (car.getCarType().equals("Truck") && car.getEngine().equals("WIA"))
             return "Truck에는 WIA엔진 사용 불가";
-        if (car.getCarType() == "Truck" && car.getBrake() == "Mando")
+        if (car.getCarType().equals("Truck") && car.getBrake().equals("Mando"))
             return "Truck에는 Mando제동장치 사용 불가";
-        if (car.getBrake() == "Bosch" && car.getSteering() != "Bosch")
+        if (car.getBrake().equals("Bosch") && !car.getSteering().equals("Bosch"))
             return "Bosch제동장치에는 Bosch조향장치 이외 사용 불가";
 
         return "PASS";
