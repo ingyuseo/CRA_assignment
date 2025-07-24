@@ -22,7 +22,7 @@ public class RunTestMenu implements Menu {
         return true;
     }
 
-    public Menu applyAndgetNextMenu(Car car, int choice) throws InterruptedException {
+    public Menu applyAndGetNextMenu(Car car, int choice) throws InterruptedException {
         if(choice == 0){
             return new CarTypeMenu();
         }

@@ -1,37 +1,61 @@
 package mission2;
 
-import mission2.Car;
-import mission2.menu.*;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockedStatic;
-import org.mockito.Spy;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.PrintStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class AssembleCarTest {
-    //sut
-    CarTypeMenu carTypeMenu = mock(CarTypeMenu.class);
-    EngineMenu engineMenu = mock(EngineMenu.class);
-    BrakeSystemMenu brakeSystemMenu = mock(BrakeSystemMenu.class);
-    SteeringSystemMenu steeringSystemMenu = mock(SteeringSystemMenu.class);
-    RunTestMenu runTestMenu = mock(RunTestMenu.class);
+    private final InputStream inputStream = System.in;
+    private final PrintStream outputStream = System.out;
+    private ByteArrayOutputStream outContent;
+
+    @BeforeEach
+    void setUpStreams() {
+        outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+    }
+
+    @AfterEach
+    void restoreStreams() {
+        System.setIn(inputStream);
+        System.setOut(outputStream);
+    }
 
     @Test
-    @DisplayName("정상입력시_마지막_RunTest진입확인")
-    void 정상입력시_마지막_RunTest진입확인() throws InterruptedException {
-        String input = "1\n1\n1\n1\n1\nexit";
+    @DisplayName("BrakeSystemMenu_잘못된범위_프로그램종료여부")
+    void BrakeSystemMenu_잘못된범위_프로그램종료여부() throws InterruptedException {
+        String input = "1\n1\n5\nexit";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
 
         AssembleCar.main(new String[0]);
+
+        String out = outContent.toString();
+        assertTrue(out.contains("ERROR :: 제동장치는"));
+    }
+
+
+    @Test
+    @DisplayName("정상입력시_마지막_RunTest진입확인")
+    void 정상입력시_마지막_RunTest진입확인() throws InterruptedException {
+        String input = "1\n1\n1\n1\n2\nexit";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+
+        AssembleCar.main(new String[0]);
+
+        String out = outContent.toString();
+        assertTrue(out.contains("멋진 차량이 완성되었습니다."));
+
     }
 
     @Test
@@ -42,29 +66,11 @@ class AssembleCarTest {
         System.setIn(in);
 
         AssembleCar.main(new String[0]);
+
+        String out = outContent.toString();
+        assertTrue(out.contains("바이바이"));
     }
 
-    @Test
-    @DisplayName("Thread_interrupt_test")
-    void Thread_interrupt_test() throws InterruptedException {
-        String input = "1\n1\n1\n1\n1\nexit";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-
-        AssembleCar.main(new String[0]);
-    }
-
-
-
-    @Test
-    @DisplayName("BrakeSystemMenu_잘못된범위_프로그램종료여부")
-    void BrakeSystemMenu_잘못된범위_프로그램종료여부() throws InterruptedException {
-        String input = "1\n1\n5\nexit";
-        InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
-
-        AssembleCar.main(new String[0]);
-    }
 
     @Test
     @DisplayName("EngineMenu_잘못된범위_입력시_프로그램종료여부")
@@ -74,6 +80,9 @@ class AssembleCarTest {
         System.setIn(in);
 
         AssembleCar.main(new String[0]);
+
+        String out = outContent.toString();
+        assertTrue(out.contains("ERROR :: 엔진은 "));
     }
 
     @Test
@@ -84,6 +93,9 @@ class AssembleCarTest {
         System.setIn(in);
 
         AssembleCar.main(new String[0]);
+
+        String out = outContent.toString();
+        assertTrue(out.contains("ERROR :: 조향장치는"));
     }
 
 
@@ -94,6 +106,10 @@ class AssembleCarTest {
         System.setIn(in);
 
         AssembleCar.main(new String[1]);
+
+        String out = outContent.toString();
+        assertTrue(out.contains("ERROR :: 숫자만 입력 가능"));
+
     }
 
     @Test
@@ -103,5 +119,8 @@ class AssembleCarTest {
         System.setIn(in);
 
         AssembleCar.main(new String[1]);
+
+        String out = outContent.toString();
+        assertTrue(out.contains("ERROR :: 차량 타입은"));
     }
 }

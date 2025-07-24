@@ -41,7 +41,7 @@ public class AssembleCar {
                 continue;
             }
 
-           currentMenu = currentMenu.applyAndgetNextMenu(car, choice);
+           currentMenu = currentMenu.applyAndGetNextMenu(car, choice);
         }
         scanner.close();
     }

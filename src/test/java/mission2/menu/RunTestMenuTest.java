@@ -4,12 +4,8 @@ import mission2.Car;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockedStatic;
-import org.mockito.Spy;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 class RunTestMenuTest {
     Car car = new Car();
@@ -33,6 +29,18 @@ class RunTestMenuTest {
 
         assertThat(result).isNotEqualTo("PASS");
     }
+
+    @Test
+    @DisplayName("잘못된입력_False반환")
+    void 잘못된입력_False반환(){
+        car.setBrake("Bosch");
+        car.setSteering("WIA");
+
+        boolean result = sut.isValidInputRange(-1);
+
+        assertThat(result).isEqualTo(false);
+    }
+
 
     @Test
     @DisplayName("Truck에는_Mando제동장치_사용불가")
@@ -102,41 +110,41 @@ class RunTestMenuTest {
     @Test
     @DisplayName("돌아가기_정상여부")
     void 돌아가기_정상여부() throws InterruptedException {
-        Menu result = sut.applyAndgetNextMenu(car,0);
+        Menu result = sut.applyAndGetNextMenu(car,0);
         assertThat(result).isInstanceOf(CarTypeMenu.class);
     }
 
     @Test
     @DisplayName("runProducedCar_정상여부1")
     void runProducedCar_정상여부1() throws InterruptedException {
-        Menu result = sut.applyAndgetNextMenu(car,1);
+        Menu result = sut.applyAndGetNextMenu(car,1);
     }
 
     @Test
     @DisplayName("runProducedCar_정상여부2")
     void runProducedCar_정상여부2() throws InterruptedException {
         car.setEngine("TOYOTA");
-        Menu result = sut.applyAndgetNextMenu(car,1);
+        Menu result = sut.applyAndGetNextMenu(car,1);
     }
 
     @Test
     @DisplayName("runProducedCar_정상여부3")
     void runProducedCar_정상여부3() throws InterruptedException {
         car.setEngine("고장난 엔진");
-        Menu result = sut.applyAndgetNextMenu(car,1);
+        Menu result = sut.applyAndGetNextMenu(car,1);
     }
 
     @Test
     @DisplayName("testProducedCar_정상여부1")
     void testProducedCar_정상여부1() throws InterruptedException {
-        Menu result = sut.applyAndgetNextMenu(car,2);
+        Menu result = sut.applyAndGetNextMenu(car,2);
     }
 
     @Test
     @DisplayName("testProducedCar_정상여부2")
     void testProducedCar_정상여부2() throws InterruptedException {
         car.setEngine("TOYOTA");
-        Menu result = sut.applyAndgetNextMenu(car,2);
+        Menu result = sut.applyAndGetNextMenu(car,2);
     }
 
 

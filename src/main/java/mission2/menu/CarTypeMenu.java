@@ -25,7 +25,7 @@ public class CarTypeMenu implements Menu {
         return true;
     }
 
-    public Menu applyAndgetNextMenu(Car car, int choice) {
+    public Menu applyAndGetNextMenu(Car car, int choice) {
         car.setCarType(Car.carTypeList[choice]);
         System.out.printf("%s 엔진을 선택하셨습니다.\n", car.getCarType());
         return new EngineMenu();

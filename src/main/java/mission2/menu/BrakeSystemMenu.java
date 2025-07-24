@@ -20,7 +20,7 @@ public class BrakeSystemMenu implements Menu {
         return true;
     }
 
-    public Menu applyAndgetNextMenu(Car car, int choice) {
+    public Menu applyAndGetNextMenu(Car car, int choice) {
         if(choice == 0) return new EngineMenu();
 
         car.setBrake(Car.brakeList[choice]);

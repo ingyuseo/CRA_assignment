@@ -20,7 +20,7 @@ public class EngineMenu implements Menu {
         return true;
     }
 
-    public Menu applyAndgetNextMenu(Car car, int choice) {
+    public Menu applyAndGetNextMenu(Car car, int choice) {
         if(choice == 0) return new CarTypeMenu();
 
         car.setEngine(Car.engineList[choice]);
