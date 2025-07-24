@@ -1,5 +1,6 @@
 package mission1;
 
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Assemble {
@@ -11,20 +12,25 @@ public class Assemble {
     private static final int SteeringSystem_MENU = 3;
     private static final int Run_Test_MENU = 4;
 
+    private static final String[] carNames = {"", "Sedan", "SUV", "Truck"};
+    private static final String[] engNames = {"", "GM", "TOYOTA", "WIA", "고장난 엔진"};
+    private static final String[] brakeNames = {"", "Mando", "Continental", "Bosch"};
+    private static final String[] steeringNames = {"", "Bosch", "Mobis"};
+
     private static final int SEDAN = 1, SUV = 2, TRUCK = 3;
-    private static final int GM = 1, TOYOTA = 2, WIA = 3;
+    private static final int GM = 1, TOYOTA = 2, WIA = 3, BROKEN_ENGINE = 4;
     private static final int MANDO = 1, CONTINENTAL = 2, BOSCH_B = 3;
     private static final int BOSCH_S = 1, MOBIS = 2;
-    public static final String ExitReply = "바이바이";
-    public static final String ERROR_INPUT_NOT_NUMBER = "ERROR :: 숫자만 입력 가능";
-    private static final int LOOP_BREAK = 1, LOOP_CONTINUE = 2, LOOP_NON = 3;
+
     public static final int DELAY_MS = 800;
     public static final int BACK_BUTTON = 0;
 
+    public static final String ExitReply = "바이바이";
+    public static final String ERROR_INPUT_NOT_NUMBER = "ERROR :: 숫자만 입력 가능";
     private static int[] carComponent = new int[5];
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         int menu = CarType_MENU;
         int choice;
 
@@ -32,8 +38,7 @@ public class Assemble {
             ClearScreen();
             showMenu(menu);
 
-            String input = getInput(sc);
-
+            String input = getInput(scanner);
             if (isExit(input)) {
                 System.out.println(ExitReply);
                 break;
@@ -54,61 +59,17 @@ public class Assemble {
 
             menu = processAndGetNextMenu(menu, choice);
         }
-        sc.close();
+        scanner.close();
     }
-
-    private static int processAndGetNextMenu(int menu, int choice) {
-        if (choice == BACK_BUTTON) {
-            if (menu == Run_Test_MENU) {
-                return CarType_MENU;
-            } else if (menu > CarType_MENU) {
-                return menu--;
-            }
-        }
-
-        if(menu == CarType_MENU){
-            selectCarType(choice);
-            delay(DELAY_MS);
-            return Engine_MENU;
-        }
-        else if(menu == Engine_MENU) {
-            selectEngine(choice);
-            delay(DELAY_MS);
-            return BrakeSystem_MENU;
-        }
-        else if(menu == BrakeSystem_MENU) {
-            selectBrakeSystem(choice);
-            delay(DELAY_MS);
-            return SteeringSystem_MENU;
-        }
-        else if(menu == SteeringSystem_MENU) {
-            selectSteeringSystem(choice);
-            delay(DELAY_MS);
-            return Run_Test_MENU;
-        }
-        else if(menu == Run_Test_MENU) {
-            if (choice == 1) {
-                runProducedCar();
-                delay(2000);
-            } else if (choice == 2) {
-                System.out.println("Test...");
-                delay(1500);
-                testProducedCar();
-                delay(2000);
-            }
-        }
-
-        return menu;
-    }
-
 
 
     private static void showMenu(int choiceStep) {
-        if(choiceStep == CarType_MENU) showCarTypeMenu();
-        else if(choiceStep == Engine_MENU) showEngineMenu();
-        else if(choiceStep == BrakeSystem_MENU) showBrakeMenu();
-        else if(choiceStep == SteeringSystem_MENU) showSteeringMenu();
-        else if(choiceStep == Run_Test_MENU) showRunTestMenu();
+        if (choiceStep == CarType_MENU) showCarTypeMenu();
+        else if (choiceStep == Engine_MENU) showEngineMenu();
+        else if (choiceStep == BrakeSystem_MENU) showBrakeMenu();
+        else if (choiceStep == SteeringSystem_MENU) showSteeringMenu();
+        else if (choiceStep == Run_Test_MENU) showRunTestMenu();
+        System.out.println("===============================");
     }
 
     private static String getInput(Scanner sc) {
@@ -133,37 +94,37 @@ public class Assemble {
         System.out.println(" '-(@)----------------(@)--'");
         System.out.println("===============================");
         System.out.println("어떤 차량 타입을 선택할까요?");
-        System.out.println("1. Sedan");
-        System.out.println("2. SUV");
-        System.out.println("3. Truck");
-        System.out.println("===============================");
+
+        for (int i = 1; i < carNames.length; i++) {
+            System.out.println(i + " " + carNames[i]);
+        }
     }
 
     private static void showEngineMenu() {
         System.out.println("어떤 엔진을 탑재할까요?");
         System.out.println("0. 뒤로가기");
-        System.out.println("1. GM");
-        System.out.println("2. TOYOTA");
-        System.out.println("3. WIA");
-        System.out.println("4. 고장난 엔진");
-        System.out.println("===============================");
+
+        for (int i = 1; i < carNames.length; i++) {
+            System.out.println(i + " " + engNames[i]);
+        }
     }
 
     private static void showBrakeMenu() {
         System.out.println("어떤 제동장치를 선택할까요?");
         System.out.println("0. 뒤로가기");
-        System.out.println("1. MANDO");
-        System.out.println("2. CONTINENTAL");
-        System.out.println("3. BOSCH");
-        System.out.println("===============================");
+
+        for (int i = 1; i < carNames.length; i++) {
+            System.out.println(i + " " + brakeNames[i]);
+        }
     }
 
     private static void showSteeringMenu() {
         System.out.println("어떤 조향장치를 선택할까요?");
         System.out.println("0. 뒤로가기");
-        System.out.println("1. BOSCH");
-        System.out.println("2. MOBIS");
-        System.out.println("===============================");
+
+        for (int i = 1; i < carNames.length; i++) {
+            System.out.println(i + " " + steeringNames[i]);
+        }
     }
 
     private static void showRunTestMenu() {
@@ -172,7 +133,6 @@ public class Assemble {
         System.out.println("0. 처음 화면으로 돌아가기");
         System.out.println("1. RUN");
         System.out.println("2. Test");
-        System.out.println("===============================");
     }
 
     private static boolean isValidInputRange(int menu, int answer) {
@@ -211,84 +171,115 @@ public class Assemble {
         return true;
     }
 
-    private static void selectCarType(int a) {
-        carComponent[CarType_MENU] = a;
-        System.out.printf("차량 타입으로 %s을 선택하셨습니다.\n", a == 1 ? "Sedan" : a == 2 ? "SUV" : "Truck");
+    private static int processAndGetNextMenu(int menu, int choice) {
+        if (choice == BACK_BUTTON) {
+            return getPrevMenu(menu);
+        }
+
+        if (menu == Run_Test_MENU) selectRunTest(choice);
+        else if (menu == CarType_MENU) selectCarType(choice);
+        else if (menu == Engine_MENU) selectEngine(choice);
+        else if (menu == BrakeSystem_MENU) selectBrakeSystem(choice);
+        else if (menu == SteeringSystem_MENU) selectSteeringSystem(choice);
+
+        delay(DELAY_MS);
+
+        return getNextMenu(menu);
     }
-    private static void selectEngine(int a) {
-        carComponent[Engine_MENU] = a;
-        String name = a == 1 ? "GM" : a == 2 ? "TOYOTA" : a == 3 ? "WIA" : "고장난 엔진";
-        System.out.printf("%s 엔진을 선택하셨습니다.\n", name);
+
+    private static int getNextMenu(int menu) {
+        int nextMenu = menu++;
+        if (menu == Run_Test_MENU) nextMenu--;
+        return nextMenu;
     }
-    private static void selectBrakeSystem(int a) {
-        carComponent[BrakeSystem_MENU] = a;
-        String name = a == 1 ? "MANDO" : a == 2 ? "CONTINENTAL" : "BOSCH";
-        System.out.printf("%s 제동장치를 선택하셨습니다.\n", name);
+
+    private static int getPrevMenu(int menu) {
+        int prevMenu = menu - 1;
+        if (menu == Run_Test_MENU) prevMenu = CarType_MENU;
+        return prevMenu;
     }
-    private static void selectSteeringSystem(int a) {
-        carComponent[SteeringSystem_MENU] = a;
-        String name = a == 1 ? "BOSCH" : "MOBIS";
-        System.out.printf("%s 조향장치를 선택하셨습니다.\n", name);
+
+    private static void selectRunTest(int choice) {
+        if (choice == 1) {
+            runProducedCar();
+            delay(2000);
+        } else if (choice == 2) {
+            System.out.println("Test...");
+            delay(1500);
+            testProducedCar();
+            delay(2000);
+        }
+    }
+
+    private static void selectCarType(int choice) {
+        carComponent[CarType_MENU] = choice;
+        System.out.printf("차량 타입으로 %s을 선택하셨습니다.\n", carNames[choice]);
+    }
+
+    private static void selectEngine(int choice) {
+        carComponent[Engine_MENU] = choice;
+        System.out.printf("%s 엔진을 선택하셨습니다.\n", engNames[choice]);
+    }
+
+    private static void selectBrakeSystem(int choice) {
+        carComponent[BrakeSystem_MENU] = choice;
+        System.out.printf("%s 제동장치를 선택하셨습니다.\n", brakeNames[choice]);
+    }
+
+    private static void selectSteeringSystem(int choice) {
+        carComponent[SteeringSystem_MENU] = choice;
+        System.out.printf("%s 조향장치를 선택하셨습니다.\n", steeringNames[choice]);
     }
 
 
-    private static boolean isValidCheck() {
-        if (carComponent[CarType_MENU] == SEDAN && carComponent[BrakeSystem_MENU] == CONTINENTAL) return false;
-        if (carComponent[CarType_MENU] == SUV   && carComponent[Engine_MENU] == TOYOTA)       return false;
-        if (carComponent[CarType_MENU] == TRUCK && carComponent[Engine_MENU] == WIA)          return false;
-        if (carComponent[CarType_MENU] == TRUCK && carComponent[BrakeSystem_MENU] == MANDO)  return false;
-        if (carComponent[BrakeSystem_MENU] == BOSCH_B && carComponent[SteeringSystem_MENU] != BOSCH_S) return false;
-        return true;
+    private static String getValidComponentResult() {
+        if (carComponent[CarType_MENU] == SEDAN && carComponent[BrakeSystem_MENU] == CONTINENTAL)
+            return "Sedan에는 Continental제동장치 사용 불가";
+        if (carComponent[CarType_MENU] == SUV && carComponent[Engine_MENU] == TOYOTA)
+            return "SUV에는 TOYOTA엔진 사용 불가";
+        if (carComponent[CarType_MENU] == TRUCK && carComponent[Engine_MENU] == WIA)
+            return "Truck에는 WIA엔진 사용 불가";
+        if (carComponent[CarType_MENU] == TRUCK && carComponent[BrakeSystem_MENU] == MANDO)
+            return "Truck에는 Mando제동장치 사용 불가";
+        if (carComponent[BrakeSystem_MENU] == BOSCH_B && carComponent[SteeringSystem_MENU] != BOSCH_S)
+            return "Bosch제동장치에는 Bosch조향장치 이외 사용 불가";
+
+        return "PASS";
+    }
+
+    private static void testProducedCar() {
+        String result = getValidComponentResult();
+
+        if (result.equals("PASS")) System.out.println("자동차 부품 조합 테스트 결과 : PASS");
+        else {
+            System.out.println("자동차 부품 조합 테스트 결과 : FAIL");
+            System.out.println(result);
+        }
     }
 
     private static void runProducedCar() {
-        if (!isValidCheck()) {
+        if (!getValidComponentResult().equals("PASS")) {
             System.out.println("자동차가 동작되지 않습니다");
             return;
         }
-        if (carComponent[Engine_MENU] == 4) {
+        if (carComponent[Engine_MENU] == BROKEN_ENGINE) {
             System.out.println("엔진이 고장나있습니다.");
             System.out.println("자동차가 움직이지 않습니다.");
             return;
         }
 
-        String[] carNames = {"", "Sedan", "SUV", "Truck"};
-        String[] engNames = {"", "GM", "TOYOTA", "WIA"};
         System.out.printf("Car Type : %s\n", carNames[carComponent[CarType_MENU]]);
         System.out.printf("Engine   : %s\n", engNames[carComponent[Engine_MENU]]);
-        System.out.printf("Brake    : %s\n",
-                carComponent[BrakeSystem_MENU]==1? "Mando":
-                        carComponent[BrakeSystem_MENU]==2? "Continental":"Bosch");
-        System.out.printf("Steering : %s\n",
-                carComponent[SteeringSystem_MENU]==1? "Bosch":"Mobis");
+        System.out.printf("Brake    : %s\n", brakeNames[carComponent[BrakeSystem_MENU]]);
+        System.out.printf("Steering : %s\n", steeringNames[carComponent[SteeringSystem_MENU]]);
         System.out.println("자동차가 동작됩니다.");
-    }
-
-    private static void testProducedCar() {
-        if (carComponent[CarType_MENU] == SEDAN && carComponent[BrakeSystem_MENU] == CONTINENTAL) {
-            fail("Sedan에는 Continental제동장치 사용 불가");
-        } else if (carComponent[CarType_MENU] == SUV && carComponent[Engine_MENU] == TOYOTA) {
-            fail("SUV에는 TOYOTA엔진 사용 불가");
-        } else if (carComponent[CarType_MENU] == TRUCK && carComponent[Engine_MENU] == WIA) {
-            fail("Truck에는 WIA엔진 사용 불가");
-        } else if (carComponent[CarType_MENU] == TRUCK && carComponent[BrakeSystem_MENU] == MANDO) {
-            fail("Truck에는 Mando제동장치 사용 불가");
-        } else if (carComponent[BrakeSystem_MENU] == BOSCH_B && carComponent[SteeringSystem_MENU] != BOSCH_S) {
-            fail("Bosch제동장치에는 Bosch조향장치 이외 사용 불가");
-        } else {
-            System.out.println("자동차 부품 조합 테스트 결과 : PASS");
-        }
-    }
-
-    private static void fail(String msg) {
-        System.out.println("자동차 부품 조합 테스트 결과 : FAIL");
-        System.out.println(msg);
     }
 
 
     private static void delay(int ms) {
         try {
             Thread.sleep(ms);
-        } catch (InterruptedException ignored) {}
+        } catch (InterruptedException ignored) {
+        }
     }
 }
