@@ -136,26 +136,26 @@ public class AssembleCar {
     private static boolean isValidInputRange(int menu, int answer) {
         switch (menu) {
             case CarType_MENU:
-                if (answer < 1 || answer > 3) {
-                    System.out.println("ERROR :: 차량 타입은 1 ~ 3 범위만 선택 가능");
+                if (answer < 1 || answer >= carTypeList.length) {
+                    System.out.println("ERROR :: 차량 타입은 1 ~ " + (carTypeList.length-1) + " 범위만 선택 가능");
                     return false;
                 }
                 break;
             case Engine_MENU:
-                if (answer < 0 || answer > 4) {
-                    System.out.println("ERROR :: 엔진은 1 ~ 4 범위만 선택 가능");
+                if (answer < 0 || answer >= engineList.length) {
+                    System.out.println("ERROR :: 엔진은 1 ~ " + (engineList.length-1) + " 범위만 선택 가능");
                     return false;
                 }
                 break;
             case BrakeSystem_MENU:
-                if (answer < 0 || answer > 3) {
-                    System.out.println("ERROR :: 제동장치는 1 ~ 3 범위만 선택 가능");
+                if (answer < 0 || answer >= brakeList.length) {
+                    System.out.println("ERROR :: 제동장치는 1 ~ " + (brakeList.length-1) + " 범위만 선택 가능");
                     return false;
                 }
                 break;
             case SteeringSystem_MENU:
-                if (answer < 0 || answer > 2) {
-                    System.out.println("ERROR :: 조향장치는 1 ~ 2 범위만 선택 가능");
+                if (answer < 0 || answer >= steeringList.length) {
+                    System.out.println("ERROR :: 조향장치는 1 ~ " + (steeringList.length-1) + " 범위만 선택 가능");
                     return false;
                 }
                 break;

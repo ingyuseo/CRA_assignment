@@ -19,7 +19,7 @@ public class CarTypeMenu implements Menu {
 
     public boolean isValidInputRange(int answer) {
         if (answer < 1 || answer >= Car.carTypeList.length) {
-            System.out.println("ERROR :: 차량 타입은 1 ~ " + Car.carTypeList.length + " 범위만 선택 가능");
+            System.out.println("ERROR :: 차량 타입은 1 ~ " + (Car.carTypeList.length-1) + " 범위만 선택 가능");
             return false;
         }
         return true;
