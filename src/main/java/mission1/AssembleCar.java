@@ -1,9 +1,8 @@
 package mission1;
 
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
-public class Assemble {
+public class AssembleCar {
     private static final String CLEAR_SCREEN = "\033[H\033[2J";
 
     private static final int CarType_MENU = 0;
@@ -12,10 +11,10 @@ public class Assemble {
     private static final int SteeringSystem_MENU = 3;
     private static final int Run_Test_MENU = 4;
 
-    private static final String[] carNames = {"", "Sedan", "SUV", "Truck"};
-    private static final String[] engNames = {"", "GM", "TOYOTA", "WIA", "고장난 엔진"};
-    private static final String[] brakeNames = {"", "Mando", "Continental", "Bosch"};
-    private static final String[] steeringNames = {"", "Bosch", "Mobis"};
+    private static final String[] carTypeList = {"", "Sedan", "SUV", "Truck"};
+    private static final String[] engineList = {"", "GM", "TOYOTA", "WIA", "고장난 엔진"};
+    private static final String[] brakeList = {"", "Mando", "Continental", "Bosch"};
+    private static final String[] steeringList = {"", "Bosch", "Mobis"};
 
     private static final int SEDAN = 1, SUV = 2, TRUCK = 3;
     private static final int GM = 1, TOYOTA = 2, WIA = 3, BROKEN_ENGINE = 4;
@@ -46,13 +45,12 @@ public class Assemble {
 
             try {
                 choice = Integer.parseInt(input);
+                if (!isValidInputRange(menu, choice)) {
+                    delay(DELAY_MS);
+                    continue;
+                }
             } catch (NumberFormatException e) {
                 System.out.println(ERROR_INPUT_NOT_NUMBER);
-                delay(DELAY_MS);
-                continue;
-            }
-
-            if (!isValidInputRange(menu, choice)) {
                 delay(DELAY_MS);
                 continue;
             }
@@ -95,8 +93,8 @@ public class Assemble {
         System.out.println("===============================");
         System.out.println("어떤 차량 타입을 선택할까요?");
 
-        for (int i = 1; i < carNames.length; i++) {
-            System.out.println(i + " " + carNames[i]);
+        for (int i = 1; i < carTypeList.length; i++) {
+            System.out.println(i + " " + carTypeList[i]);
         }
     }
 
@@ -104,8 +102,8 @@ public class Assemble {
         System.out.println("어떤 엔진을 탑재할까요?");
         System.out.println("0. 뒤로가기");
 
-        for (int i = 1; i < carNames.length; i++) {
-            System.out.println(i + " " + engNames[i]);
+        for (int i = 1; i < engineList.length; i++) {
+            System.out.println(i + " " + engineList[i]);
         }
     }
 
@@ -113,8 +111,8 @@ public class Assemble {
         System.out.println("어떤 제동장치를 선택할까요?");
         System.out.println("0. 뒤로가기");
 
-        for (int i = 1; i < carNames.length; i++) {
-            System.out.println(i + " " + brakeNames[i]);
+        for (int i = 1; i < brakeList.length; i++) {
+            System.out.println(i + " " + brakeList[i]);
         }
     }
 
@@ -122,8 +120,8 @@ public class Assemble {
         System.out.println("어떤 조향장치를 선택할까요?");
         System.out.println("0. 뒤로가기");
 
-        for (int i = 1; i < carNames.length; i++) {
-            System.out.println(i + " " + steeringNames[i]);
+        for (int i = 1; i < steeringList.length; i++) {
+            System.out.println(i + " " + steeringList[i]);
         }
     }
 
@@ -188,9 +186,8 @@ public class Assemble {
     }
 
     private static int getNextMenu(int menu) {
-        int nextMenu = menu++;
-        if (menu == Run_Test_MENU) nextMenu--;
-        return nextMenu;
+        if (menu == Run_Test_MENU) return menu;
+        return menu + 1;
     }
 
     private static int getPrevMenu(int menu) {
@@ -213,22 +210,22 @@ public class Assemble {
 
     private static void selectCarType(int choice) {
         carComponent[CarType_MENU] = choice;
-        System.out.printf("차량 타입으로 %s을 선택하셨습니다.\n", carNames[choice]);
+        System.out.printf("차량 타입으로 %s을 선택하셨습니다.\n", carTypeList[choice]);
     }
 
     private static void selectEngine(int choice) {
         carComponent[Engine_MENU] = choice;
-        System.out.printf("%s 엔진을 선택하셨습니다.\n", engNames[choice]);
+        System.out.printf("%s 엔진을 선택하셨습니다.\n", engineList[choice]);
     }
 
     private static void selectBrakeSystem(int choice) {
         carComponent[BrakeSystem_MENU] = choice;
-        System.out.printf("%s 제동장치를 선택하셨습니다.\n", brakeNames[choice]);
+        System.out.printf("%s 제동장치를 선택하셨습니다.\n", brakeList[choice]);
     }
 
     private static void selectSteeringSystem(int choice) {
         carComponent[SteeringSystem_MENU] = choice;
-        System.out.printf("%s 조향장치를 선택하셨습니다.\n", steeringNames[choice]);
+        System.out.printf("%s 조향장치를 선택하셨습니다.\n", steeringList[choice]);
     }
 
 
@@ -268,10 +265,10 @@ public class Assemble {
             return;
         }
 
-        System.out.printf("Car Type : %s\n", carNames[carComponent[CarType_MENU]]);
-        System.out.printf("Engine   : %s\n", engNames[carComponent[Engine_MENU]]);
-        System.out.printf("Brake    : %s\n", brakeNames[carComponent[BrakeSystem_MENU]]);
-        System.out.printf("Steering : %s\n", steeringNames[carComponent[SteeringSystem_MENU]]);
+        System.out.printf("Car Type : %s\n", carTypeList[carComponent[CarType_MENU]]);
+        System.out.printf("Engine   : %s\n", engineList[carComponent[Engine_MENU]]);
+        System.out.printf("Brake    : %s\n", brakeList[carComponent[BrakeSystem_MENU]]);
+        System.out.printf("Steering : %s\n", steeringList[carComponent[SteeringSystem_MENU]]);
         System.out.println("자동차가 동작됩니다.");
     }
 
