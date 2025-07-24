@@ -101,40 +101,40 @@ class RunTestMenuTest {
 
     @Test
     @DisplayName("돌아가기_정상여부")
-    void 돌아가기_정상여부(){
+    void 돌아가기_정상여부() throws InterruptedException {
         Menu result = sut.applyAndgetNextMenu(car,0);
         assertThat(result).isInstanceOf(CarTypeMenu.class);
     }
 
     @Test
     @DisplayName("runProducedCar_정상여부1")
-    void runProducedCar_정상여부1(){
+    void runProducedCar_정상여부1() throws InterruptedException {
         Menu result = sut.applyAndgetNextMenu(car,1);
     }
 
     @Test
     @DisplayName("runProducedCar_정상여부2")
-    void runProducedCar_정상여부2(){
+    void runProducedCar_정상여부2() throws InterruptedException {
         car.setEngine("TOYOTA");
         Menu result = sut.applyAndgetNextMenu(car,1);
     }
 
     @Test
     @DisplayName("runProducedCar_정상여부3")
-    void runProducedCar_정상여부3(){
+    void runProducedCar_정상여부3() throws InterruptedException {
         car.setEngine("고장난 엔진");
         Menu result = sut.applyAndgetNextMenu(car,1);
     }
 
     @Test
     @DisplayName("testProducedCar_정상여부1")
-    void testProducedCar_정상여부1(){
+    void testProducedCar_정상여부1() throws InterruptedException {
         Menu result = sut.applyAndgetNextMenu(car,2);
     }
 
     @Test
     @DisplayName("testProducedCar_정상여부2")
-    void testProducedCar_정상여부2(){
+    void testProducedCar_정상여부2() throws InterruptedException {
         car.setEngine("TOYOTA");
         Menu result = sut.applyAndgetNextMenu(car,2);
     }

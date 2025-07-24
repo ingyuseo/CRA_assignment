@@ -11,7 +11,7 @@ public class AssembleCar {
     public static final int DELAY_MS = 800;
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Scanner scanner = new Scanner(System.in);
         Car car = new Car();
         int choice;
@@ -60,10 +60,7 @@ public class AssembleCar {
         System.out.flush();
     }
 
-    public static void delay(int ms) {
-        try {
+    public static void delay(int ms) throws InterruptedException {
             Thread.sleep(ms);
-        } catch (InterruptedException ignored) {
-        }
     }
 }
